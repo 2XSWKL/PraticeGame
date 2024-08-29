@@ -8,7 +8,7 @@ class Ship:
         """初始化飞船"""
         # 位置,大小,图像
         self.screen = ai_game.screen
-        self.setting = ai_game.setting
+        self.settings = ai_game.settings
         self.screen_rect = ai_game.screen.get_rect()
         self.image = pygame.image.load('images/ship.bmp')
         self.rect = self.image.get_rect()
@@ -22,15 +22,19 @@ class Ship:
         self.moving_left = False
         self.moving_up = False
         self.moving_down = False
+        # 开火标志
+        self.fired = False
+        # 开火冷却时间
+        self.fire_cd = 0
 
     def move_x(self):
         if (
-                self.moving_right and abs(self.displacement_x) < self.setting.ship_speed
+                self.moving_right and abs(self.displacement_x) < self.settings.ship_speed
                 and self.rect.right < self.screen_rect.right
                 ):
             self.displacement_x += 0.4
         if (
-                self.moving_left and abs(self.displacement_x) < self.setting.ship_speed
+                self.moving_left and abs(self.displacement_x) < self.settings.ship_speed
                 and self.rect.left > self.screen_rect.left
                 ):
             self.displacement_x -= 0.4
@@ -45,12 +49,12 @@ class Ship:
 
     def move_y(self):
         if (
-                self.moving_down and abs(self.displacement_y) < self.setting.ship_speed
+                self.moving_down and abs(self.displacement_y) < self.settings.ship_speed
                 and self.rect.bottom < self.screen_rect.bottom
                 ):
             self.displacement_y += 0.4
         if (
-                self.moving_up and abs(self.displacement_y) < self.setting.ship_speed
+                self.moving_up and abs(self.displacement_y) < self.settings.ship_speed
                 and self.rect.top > self.screen_rect.top
                 ):
             self.displacement_y -= 0.4
