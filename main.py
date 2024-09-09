@@ -3,6 +3,7 @@ import pygame
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
+from enemy import Enemy
 
 
 class AircraftInvasion:
@@ -18,6 +19,8 @@ class AircraftInvasion:
             (self.settings.screen_width, self.settings.screen_height))
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
+        self.enemys = pygame.sprite.Group()
+        self._create_fleet()
 
     def _check_events(self):
         """响应事件"""
@@ -56,17 +59,6 @@ class AircraftInvasion:
         elif event.key == pygame.K_SPACE:
             self.ship.fired = False
 
-    def _update_screen(self):
-        """更新屏幕"""
-        # 重绘屏幕
-        self.screen.fill(self.settings.background_color)
-        # 刷新屏幕
-        for bullet in self.bullets.sprites():
-            bullet.draw_bullet()
-        self.ship.blitme()
-
-        pygame.display.flip()
-
     def _fire_bullet(self):
         """创建子弹，并将其加入编组bullets"""
         if self.ship.fire_cd > 0:
@@ -87,11 +79,30 @@ class AircraftInvasion:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
+    def _create_fleet(self):
+        """创建一个敌人舰队"""
+        while len(self.enemys) < self.settings.enemy_count:
+            new_enemy = Enemy(self)
+            self.enemys.add(new_enemy)
+
+    def _update_screen(self):
+        """更新屏幕"""
+        # 重绘屏幕
+        self.screen.fill(self.settings.background_color)
+        # 刷新屏幕
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
+        self.ship.blitme()
+        self.enemys.draw(self.screen)
+
+        pygame.display.flip()
+
     def run_game(self):
         """创建游戏循环"""
         while True:
             self._check_events()
             self.ship.update()
+            self.enemys.update()
             self._update_bullet()
             self._update_screen()
             self.clock.tick(60)

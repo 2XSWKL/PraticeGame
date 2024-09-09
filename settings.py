@@ -18,4 +18,6 @@ class Settings:
         self.bullet_width = 3
         self.bullet_height = 15
         self.bullet_color = (200, 200, 200)
-
+        # 敌人设置
+        self.enemy_count = 10
+        self.enemy_speed = 3.0
