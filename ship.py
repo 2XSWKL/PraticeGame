@@ -31,12 +31,12 @@ class Ship:
         if (
                 self.moving_right and abs(self.displacement_x) < self.settings.ship_speed
                 and self.rect.right < self.screen_rect.right
-                ):
+        ):
             self.displacement_x += 0.4
         if (
                 self.moving_left and abs(self.displacement_x) < self.settings.ship_speed
                 and self.rect.left > self.screen_rect.left
-                ):
+        ):
             self.displacement_x -= 0.4
 
         if self.displacement_x == 0.0:
@@ -51,12 +51,12 @@ class Ship:
         if (
                 self.moving_down and abs(self.displacement_y) < self.settings.ship_speed
                 and self.rect.bottom < self.screen_rect.bottom
-                ):
+        ):
             self.displacement_y += 0.4
         if (
                 self.moving_up and abs(self.displacement_y) < self.settings.ship_speed
                 and self.rect.top > self.screen_rect.top
-                ):
+        ):
             self.displacement_y -= 0.4
 
         if self.displacement_y == 0.0:
@@ -78,3 +78,11 @@ class Ship:
     def blitme(self):
         """绘制飞船"""
         self.screen.blit(self.image, self.rect)
+
+    def center_ship(self):
+        """将⻜船放在屏幕底部的中央"""
+        self.rect.midbottom = self.screen_rect.midbottom
+        self.x = float(self.rect.x)
+        self.y = float(self.rect.y)
+        self.displacement_x = 0.0
+        self.displacement_y = 0.0
