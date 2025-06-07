@@ -32,9 +32,9 @@ class Enemy(Sprite):
     def update(self):
         """更新敌人位置"""
         self.update_ship_position(self.ai_game)
-        if self.x < self.ship_x:
+        if self.x < (self.ship_x - 100):
             self.x += self.settings.enemy_speed
-        else:
+        elif self.x >= (self.ship_x + 100):
             self.x -= self.settings.enemy_speed
         if self.y < self.ship_y:
             self.y += self.settings.enemy_speed
